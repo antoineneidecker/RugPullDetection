@@ -1,7 +1,7 @@
 import json
 import requests
-import shared
-shared.init()
+from google.colab import userdata
+
 
 
 def get_source_code(token_address, out_path):
@@ -20,7 +20,7 @@ def get_source_code(token_address, out_path):
                            "module=contract" \
                            "&action=getsourcecode" \
                            f"&address={token_address}" \
-                           f"&apikey={shared.API_KEY}"
+                           f"&apikey={userdata.get("etherscan_api_key")}"
     source_code = json.loads(requests.get(source_code_endpoint).text)['result']
 
     with open(f"{out_path}/{token_address}.json", "w") as outfile:
